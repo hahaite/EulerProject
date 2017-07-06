@@ -5,6 +5,7 @@
 // https://rosettacode.org/wiki/Miller%E2%80%93Rabin_primality_test#C
 
 #include <cstdlib>
+#include <map>
 
 class CPrime
 {
@@ -29,5 +30,29 @@ public :
 private :
 	long long m_curPrime ;
 };
+
+
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+
+class CDivisor
+{
+public :
+
+	void getIntegerFactorization(long long value, std::map<long long, int>* pMapIntFactor) ;
+private :
+
+public :
+
+private :
+
+
+};
+
+
+
+
+
+
 
 #endif

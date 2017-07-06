@@ -1,6 +1,7 @@
 #include <cstdio>
 
 #include <sys/time.h>
+#include <map>
 
 #include "mymath.h"
 
@@ -14,13 +15,29 @@ int main()
 	gettimeofday(&tFirst, NULL) ;
 	/////////////////////////////////////////////////////////////////////
 
-
+#if 0
 	CPrime prime ;
 
 	long long curPrime ;
 
 	curPrime = prime.getNextPrime() ;	
 	printf("cur Prime : %lld\n", curPrime) ;
+#endif
+
+	map<long long, int> 		mapIntFactor ;
+	map<long long, int>::iterator 	mapIntFactorIter ;
+
+	CDivisor divisor ;
+
+//	void getIntegerFactorization(int value, std::map<long long, int>* pMapIntFactor) ;
+
+	divisor.getIntegerFactorization(252, &mapIntFactor) ;
+
+	mapIntFactorIter = mapIntFactor.begin() ;
+	for(; mapIntFactorIter != mapIntFactor.end(); mapIntFactorIter++)
+	{
+		printf("Integer Factorialization : [%d, %d]\n", mapIntFactorIter->first, mapIntFactorIter->second) ;
+	}
 
 
 	/////////////////////////////////////////////////////////////////////

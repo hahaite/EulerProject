@@ -1,5 +1,11 @@
 #include "mymath.h"
 
+#include <cstdio>
+#include <set>
+
+using namespace std ;
+
+
 CPrime::CPrime()
 {
 	m_curPrime = 0 ;
@@ -116,6 +122,54 @@ long long CPrime::getNextPrime()
 	return m_curPrime ;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
+void CDivisor::getIntegerFactorization(long long value, map<long long, int>* pMapIntFactor)
+{
+	CPrime prime ;
+	int ret ;
+	
+	long long myPrime ;
 
+	map<long long, int>::iterator 		mapIntFactorIter ;
+
+	while(1)
+	{
+		ret = prime.isPrime(value) ;
+		if(ret)
+		{
+			mapIntFactorIter = pMapIntFactor->find(value) ;
+			if(mapIntFactorIter == pMapIntFactor->end())
+				pMapIntFactor->insert(make_pair(value, 1)) ;
+			else
+				mapIntFactorIter->second++ ;
+
+			break ;
+		}
+		
+		myPrime = prime.getNextPrime() ;
+
+		while(1)
+		{
+			if(value % myPrime == 0)
+			{
+				value /= myPrime ;
+				
+				mapIntFactorIter = pMapIntFactor->find(myPrime) ;
+				if(mapIntFactorIter == pMapIntFactor->end())
+					pMapIntFactor->insert(make_pair(myPrime, 1)) ;
+				else
+					mapIntFactorIter->second++ ;
+			}
+			else
+			{
+				break ;
+			}
+		}
+	}
+
+	return  ;
+}
 
