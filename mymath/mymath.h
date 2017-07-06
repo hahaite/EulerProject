@@ -1,11 +1,10 @@
 #ifndef _PRIME_H_
 #define _PRIME_H_
 
-// src : Rosetta Code - Miller Robin Algorithm
+// src about prime : Rosetta Code - Miller Robin Algorithm
 // https://rosettacode.org/wiki/Miller%E2%80%93Rabin_primality_test#C
 
 #include <cstdlib>
-
 
 class CPrime
 {

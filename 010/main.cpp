@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <sys/time.h>
 
-#include "./../prime/prime.h"
+#include "./../mymath/mymath.h"
 
 int main()
 {

@@ -1,4 +1,4 @@
-#include "prime.h"
+#include "mymath.h"
 
 CPrime::CPrime()
 {

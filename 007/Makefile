@@ -1,5 +1,5 @@
 SRC = main.cpp
-SRC += ./../prime/prime.cpp
+SRC += ./../mymath/mymath.cpp
 
 CFLAGS += -W -Wall
 CFLAGS += -Wno-unused-variable

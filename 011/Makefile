@@ -1,4 +1,4 @@
-SRC = main.cpp prime.cpp
+SRC = main.cpp
 
 CFLAGS += -W -Wall
 CFLAGS += -Wno-unused-variable

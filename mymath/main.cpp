@@ -2,7 +2,7 @@
 
 #include <sys/time.h>
 
-#include "prime.h"
+#include "mymath.h"
 
 using namespace std ;
 

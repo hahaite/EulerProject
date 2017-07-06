@@ -1,5 +1,4 @@
-SRC = main.cpp
-SRC += ./../mymath/mymath.cpp
+SRC = main.cpp mymath.cpp
 
 CFLAGS += -W -Wall
 CFLAGS += -Wno-unused-variable
