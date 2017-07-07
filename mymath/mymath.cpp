@@ -132,8 +132,9 @@ void CDivisor::getIntegerFactorization(long long value, map<long long, int>* pMa
 	int ret ;
 	
 	long long myPrime ;
-
 	map<long long, int>::iterator 		mapIntFactorIter ;
+
+	prime.resetPrime() ;
 
 	while(1)
 	{
@@ -182,7 +183,6 @@ void CDivisor::getDivisor(int value, std::list<int>* pListDivisor)
 {
         int divisor ;
 
-
         map<int, pair<int, int> >               mapUpper ;
         map<int, pair<int, int> >::iterator mapUpperIter ;
 
@@ -190,6 +190,7 @@ void CDivisor::getDivisor(int value, std::list<int>* pListDivisor)
         map<long long, int>::iterator mapIniFactorIter ;
 
         pListDivisor->clear() ;
+	mapIniFactor.clear() ;
 
         if(value == 1)
         {

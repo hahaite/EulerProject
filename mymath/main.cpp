@@ -30,7 +30,7 @@ int main()
 	map<long long, int> 		mapIntFactor ;
 	map<long long, int>::iterator 	mapIntFactorIter ;
 
-	divisor.getIntegerFactorization(72, &mapIntFactor) ;
+	divisor.getIntegerFactorization(8, &mapIntFactor) ;
 
 	mapIntFactorIter = mapIntFactor.begin() ;
 	for(; mapIntFactorIter != mapIntFactor.end(); mapIntFactorIter++)
@@ -41,11 +41,11 @@ int main()
 
 
 // test - get divisor
-#if 1	
+#if 1
 	list<int> 		listDivisor ;
 	list<int>::iterator 	listDivisorIter ;
 
-	int value = 150 ;
+	int value = 9 ;
 	divisor.getDivisor(value, &listDivisor) ;
 
 	listDivisorIter = listDivisor.begin() ;
