@@ -6,6 +6,7 @@
 
 #include <cstdlib>
 #include <map>
+#include <list>
 
 class CPrime
 {
@@ -38,8 +39,9 @@ private :
 class CDivisor
 {
 public :
-
 	void getIntegerFactorization(long long value, std::map<long long, int>* pMapIntFactor) ;
+
+	void getDivisor(int value, std::list<int>* pListDivisor) ;
 private :
 
 public :

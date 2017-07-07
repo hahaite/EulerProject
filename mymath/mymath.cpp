@@ -1,7 +1,7 @@
 #include "mymath.h"
 
 #include <cstdio>
-#include <set>
+#include <cmath>
 
 using namespace std ;
 
@@ -128,7 +128,7 @@ long long CPrime::getNextPrime()
 
 void CDivisor::getIntegerFactorization(long long value, map<long long, int>* pMapIntFactor)
 {
-	CPrime prime ;
+	static CPrime prime ;
 	int ret ;
 	
 	long long myPrime ;
@@ -156,12 +156,17 @@ void CDivisor::getIntegerFactorization(long long value, map<long long, int>* pMa
 			if(value % myPrime == 0)
 			{
 				value /= myPrime ;
-				
+	
+			
 				mapIntFactorIter = pMapIntFactor->find(myPrime) ;
 				if(mapIntFactorIter == pMapIntFactor->end())
 					pMapIntFactor->insert(make_pair(myPrime, 1)) ;
 				else
 					mapIntFactorIter->second++ ;
+
+				ret = prime.isPrime(value) ;
+				if(ret)
+					break ;
 			}
 			else
 			{
@@ -172,4 +177,82 @@ void CDivisor::getIntegerFactorization(long long value, map<long long, int>* pMa
 
 	return  ;
 }
+
+void CDivisor::getDivisor(int value, std::list<int>* pListDivisor)
+{
+        int divisor ;
+
+
+        map<int, pair<int, int> >               mapUpper ;
+        map<int, pair<int, int> >::iterator mapUpperIter ;
+
+        map<long long, int>           mapIniFactor ;
+        map<long long, int>::iterator mapIniFactorIter ;
+
+        pListDivisor->clear() ;
+
+        if(value == 1)
+        {
+                pListDivisor->push_back(1) ;
+                return ;
+        }
+
+        getIntegerFactorization(value, &mapIniFactor) ;
+
+//	mapIniFactorIter = mapIniFactor.begin() ;
+//	for(; mapIniFactorIter != mapIniFactor.end(); mapIniFactorIter++)
+//		printf("[%d.%d]\n", mapIniFactorIter->first, mapIniFactorIter->second) ;
+
+        mapIniFactorIter = mapIniFactor.begin() ;
+        for(; mapIniFactorIter != mapIniFactor.end(); mapIniFactorIter++)
+                mapUpper.insert(make_pair(mapIniFactorIter->first, make_pair(mapIniFactorIter->second, 0))) ;
+
+        while(1)
+        {
+                divisor = 1 ;
+
+                mapUpperIter = mapUpper.begin() ;
+                for(; mapUpperIter != mapUpper.end(); mapUpperIter++)
+                {
+                        divisor *= pow(mapUpperIter->first, mapUpperIter->second.second) ;
+                }
+                pListDivisor->push_back(divisor) ;
+
+                mapUpperIter = mapUpper.begin() ;
+
+                while(1)
+                {
+                        mapUpperIter->second.second++ ;
+
+                        if(mapUpperIter->second.second > mapUpperIter->second.first)
+                        {
+                                mapUpperIter->second.second = 0 ;
+                                mapUpperIter++ ;
+
+                                if(mapUpperIter == mapUpper.end())
+                                        goto getDivisor_while_break ;
+                                else
+                                        continue ;
+                        }
+
+                        break ;
+                }
+
+                continue ;
+
+getDivisor_while_break :
+                break ;
+        }
+
+        pListDivisor->sort() ;
+
+#if 0
+        list<int>::iterator     listDivisorIter = pListDivisor->begin() ;
+        for(; listDivisorIter != listDivisor.end(); listDivisorIter++)
+                printf("divisor : %d\n", *listDivisorIter) ;
+#endif
+
+	return ;
+}
+
 

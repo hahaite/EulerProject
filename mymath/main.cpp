@@ -23,22 +23,37 @@ int main()
 	curPrime = prime.getNextPrime() ;	
 	printf("cur Prime : %lld\n", curPrime) ;
 #endif
+	CDivisor divisor ;
 
+// test - get integer factorization.
+#if 0
 	map<long long, int> 		mapIntFactor ;
 	map<long long, int>::iterator 	mapIntFactorIter ;
 
-	CDivisor divisor ;
-
-//	void getIntegerFactorization(int value, std::map<long long, int>* pMapIntFactor) ;
-
-	divisor.getIntegerFactorization(252, &mapIntFactor) ;
+	divisor.getIntegerFactorization(72, &mapIntFactor) ;
 
 	mapIntFactorIter = mapIntFactor.begin() ;
 	for(; mapIntFactorIter != mapIntFactor.end(); mapIntFactorIter++)
 	{
 		printf("Integer Factorialization : [%d, %d]\n", mapIntFactorIter->first, mapIntFactorIter->second) ;
 	}
+#endif
 
+
+// test - get divisor
+#if 1	
+	list<int> 		listDivisor ;
+	list<int>::iterator 	listDivisorIter ;
+
+	int value = 150 ;
+	divisor.getDivisor(value, &listDivisor) ;
+
+	listDivisorIter = listDivisor.begin() ;
+	for(; listDivisorIter != listDivisor.end(); listDivisorIter++)
+		printf("%d ", *listDivisorIter) ;
+
+	printf("\n") ;
+#endif
 
 	/////////////////////////////////////////////////////////////////////
 	gettimeofday(&tSecond, NULL) ;
