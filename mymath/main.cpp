@@ -41,7 +41,7 @@ int main()
 
 
 // test - get divisor
-#if 1
+#if 0
 	list<int> 		listDivisor ;
 	list<int>::iterator 	listDivisorIter ;
 
@@ -53,6 +53,12 @@ int main()
 		printf("%d ", *listDivisorIter) ;
 
 	printf("\n") ;
+#endif
+
+// test - get divisor number
+#if 1
+	int num = divisor.getDivisorNum(72) ;
+	printf("divisor number ; %d\n", num) ;
 #endif
 
 	/////////////////////////////////////////////////////////////////////

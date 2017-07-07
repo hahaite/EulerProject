@@ -42,6 +42,7 @@ public :
 	void getIntegerFactorization(long long value, std::map<long long, int>* pMapIntFactor) ;
 
 	void getDivisor(int value, std::list<int>* pListDivisor) ;
+	int getDivisorNum(int value) ;
 private :
 
 public :

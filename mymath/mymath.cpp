@@ -186,11 +186,11 @@ void CDivisor::getDivisor(int value, std::list<int>* pListDivisor)
         map<int, pair<int, int> >               mapUpper ;
         map<int, pair<int, int> >::iterator mapUpperIter ;
 
-        map<long long, int>           mapIniFactor ;
-        map<long long, int>::iterator mapIniFactorIter ;
+        map<long long, int>           mapIntFactor ;
+        map<long long, int>::iterator mapIntFactorIter ;
 
         pListDivisor->clear() ;
-	mapIniFactor.clear() ;
+	mapIntFactor.clear() ;
 
         if(value == 1)
         {
@@ -198,15 +198,15 @@ void CDivisor::getDivisor(int value, std::list<int>* pListDivisor)
                 return ;
         }
 
-        getIntegerFactorization(value, &mapIniFactor) ;
+        getIntegerFactorization(value, &mapIntFactor) ;
 
-//	mapIniFactorIter = mapIniFactor.begin() ;
-//	for(; mapIniFactorIter != mapIniFactor.end(); mapIniFactorIter++)
-//		printf("[%d.%d]\n", mapIniFactorIter->first, mapIniFactorIter->second) ;
+//	mapIntFactorIter = mapIntFactor.begin() ;
+//	for(; mapIntFactorIter != mapIntFactor.end(); mapIntFactorIter++)
+//		printf("[%d.%d]\n", mapIntFactorIter->first, mapIntFactorIter->second) ;
 
-        mapIniFactorIter = mapIniFactor.begin() ;
-        for(; mapIniFactorIter != mapIniFactor.end(); mapIniFactorIter++)
-                mapUpper.insert(make_pair(mapIniFactorIter->first, make_pair(mapIniFactorIter->second, 0))) ;
+        mapIntFactorIter = mapIntFactor.begin() ;
+        for(; mapIntFactorIter != mapIntFactor.end(); mapIntFactorIter++)
+                mapUpper.insert(make_pair(mapIntFactorIter->first, make_pair(mapIntFactorIter->second, 0))) ;
 
         while(1)
         {
@@ -257,3 +257,22 @@ getDivisor_while_break :
 }
 
 
+int CDivisor::getDivisorNum(int value)
+{
+        map<long long, int>           mapIntFactor ;
+        map<long long, int>::iterator mapIntFactorIter ;
+
+	mapIntFactor.clear() ;
+
+        getIntegerFactorization(value, &mapIntFactor) ;
+
+	mapIntFactorIter = mapIntFactor.begin() ;
+
+	int ret = 1 ;
+	for(; mapIntFactorIter != mapIntFactor.end(); mapIntFactorIter++)
+	{
+		ret *= (mapIntFactorIter->second + 1) ;
+	}
+
+	return ret ;
+}
