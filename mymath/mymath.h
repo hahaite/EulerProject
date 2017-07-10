@@ -16,6 +16,8 @@ public :
 
 	bool isPrime(size_t n) ;
 
+	void setPrime(long long prime) ;
+
 	void resetPrime() ;
 	long long getNextPrime() ;
 private :

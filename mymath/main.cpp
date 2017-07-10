@@ -15,14 +15,22 @@ int main()
 	gettimeofday(&tFirst, NULL) ;
 	/////////////////////////////////////////////////////////////////////
 
-#if 0
 	CPrime prime ;
-
+#if 0
 	long long curPrime ;
 
 	curPrime = prime.getNextPrime() ;	
 	printf("cur Prime : %lld\n", curPrime) ;
 #endif
+
+#if 1
+	long long curPrime ;
+
+	prime.setPrime(1008) ;	
+	curPrime = prime.getNextPrime() ;	
+	printf("cur Prime : %lld\n", curPrime) ;
+#endif
+
 	CDivisor divisor ;
 
 // test - get integer factorization.
@@ -56,7 +64,7 @@ int main()
 #endif
 
 // test - get divisor number
-#if 1
+#if 0
 	int num = divisor.getDivisorNum(72) ;
 	printf("divisor number ; %d\n", num) ;
 #endif

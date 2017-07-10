@@ -87,6 +87,15 @@ bool CPrime::isPrime(size_t n)
 
 }
 
+void CPrime::setPrime(long long prime)
+{
+	if((prime & 1L) == 0)
+		prime-- ;
+	
+	m_curPrime = prime ;
+
+	return ;
+}
 
 void CPrime::resetPrime()
 {
