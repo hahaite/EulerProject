@@ -23,7 +23,7 @@ int main()
 	printf("cur Prime : %lld\n", curPrime) ;
 #endif
 
-#if 1
+#if 0
 	long long curPrime ;
 
 	prime.setPrime(1008) ;	
@@ -68,6 +68,14 @@ int main()
 	int num = divisor.getDivisorNum(72) ;
 	printf("divisor number ; %d\n", num) ;
 #endif
+
+	CInteger integer ;
+
+	int rev = integer.reverse(12345001) ;
+	printf("rev : %d\n", rev) ;
+
+
+
 
 	/////////////////////////////////////////////////////////////////////
 	gettimeofday(&tSecond, NULL) ;

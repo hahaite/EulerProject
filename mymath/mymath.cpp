@@ -285,3 +285,36 @@ int CDivisor::getDivisorNum(int value)
 
 	return ret ;
 }
+
+
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+long long CInteger::reverse(long long value)
+{
+	long long temp = 0 ;
+	while(1)
+	{
+		temp += value % 10 ;
+
+		value /= 10 ;
+
+		if(value == 0 )
+			break ;
+
+		temp *= 10 ;
+	}
+
+	return temp ;
+}
+
+int CInteger::palindrome(long long value)
+{
+	
+	long long temp = this->reverse(value) ;
+
+	if(temp == value)
+		return 1 ;
+
+	return 0 ;
+}
