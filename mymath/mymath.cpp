@@ -2,6 +2,7 @@
 
 #include <cstdio>
 #include <cmath>
+#include <algorithm>
 
 using namespace std ;
 
@@ -13,7 +14,6 @@ CPrime::CPrime()
 
 CPrime::~CPrime()
 {
-
 
 }
 
@@ -190,76 +190,76 @@ void CDivisor::getIntegerFactorization(long long value, map<long long, int>* pMa
 
 void CDivisor::getDivisor(int value, std::list<int>* pListDivisor)
 {
-        int divisor ;
+	int divisor ;
 
-        map<int, pair<int, int> >               mapUpper ;
-        map<int, pair<int, int> >::iterator mapUpperIter ;
+	map<int, pair<int, int> >	       mapUpper ;
+	map<int, pair<int, int> >::iterator mapUpperIter ;
 
-        map<long long, int>           mapIntFactor ;
-        map<long long, int>::iterator mapIntFactorIter ;
+	map<long long, int>	   mapIntFactor ;
+	map<long long, int>::iterator mapIntFactorIter ;
 
-        pListDivisor->clear() ;
+	pListDivisor->clear() ;
 	mapIntFactor.clear() ;
 
-        if(value == 1)
-        {
-                pListDivisor->push_back(1) ;
-                return ;
-        }
+	if(value == 1)
+	{
+		pListDivisor->push_back(1) ;
+		return ;
+	}
 
-        getIntegerFactorization(value, &mapIntFactor) ;
+	getIntegerFactorization(value, &mapIntFactor) ;
 
 //	mapIntFactorIter = mapIntFactor.begin() ;
 //	for(; mapIntFactorIter != mapIntFactor.end(); mapIntFactorIter++)
 //		printf("[%d.%d]\n", mapIntFactorIter->first, mapIntFactorIter->second) ;
 
-        mapIntFactorIter = mapIntFactor.begin() ;
-        for(; mapIntFactorIter != mapIntFactor.end(); mapIntFactorIter++)
-                mapUpper.insert(make_pair(mapIntFactorIter->first, make_pair(mapIntFactorIter->second, 0))) ;
+	mapIntFactorIter = mapIntFactor.begin() ;
+	for(; mapIntFactorIter != mapIntFactor.end(); mapIntFactorIter++)
+		mapUpper.insert(make_pair(mapIntFactorIter->first, make_pair(mapIntFactorIter->second, 0))) ;
 
-        while(1)
-        {
-                divisor = 1 ;
+	while(1)
+	{
+		divisor = 1 ;
 
-                mapUpperIter = mapUpper.begin() ;
-                for(; mapUpperIter != mapUpper.end(); mapUpperIter++)
-                {
-                        divisor *= pow(mapUpperIter->first, mapUpperIter->second.second) ;
-                }
-                pListDivisor->push_back(divisor) ;
+		mapUpperIter = mapUpper.begin() ;
+		for(; mapUpperIter != mapUpper.end(); mapUpperIter++)
+		{
+			divisor *= pow(mapUpperIter->first, mapUpperIter->second.second) ;
+		}
+		pListDivisor->push_back(divisor) ;
 
-                mapUpperIter = mapUpper.begin() ;
+		mapUpperIter = mapUpper.begin() ;
 
-                while(1)
-                {
-                        mapUpperIter->second.second++ ;
+		while(1)
+		{
+			mapUpperIter->second.second++ ;
 
-                        if(mapUpperIter->second.second > mapUpperIter->second.first)
-                        {
-                                mapUpperIter->second.second = 0 ;
-                                mapUpperIter++ ;
+			if(mapUpperIter->second.second > mapUpperIter->second.first)
+			{
+				mapUpperIter->second.second = 0 ;
+				mapUpperIter++ ;
 
-                                if(mapUpperIter == mapUpper.end())
-                                        goto getDivisor_while_break ;
-                                else
-                                        continue ;
-                        }
+				if(mapUpperIter == mapUpper.end())
+					goto getDivisor_while_break ;
+				else
+					continue ;
+			}
 
-                        break ;
-                }
+			break ;
+		}
 
-                continue ;
+		continue ;
 
 getDivisor_while_break :
-                break ;
-        }
+		break ;
+	}
 
-        pListDivisor->sort() ;
+	pListDivisor->sort() ;
 
 #if 0
-        list<int>::iterator     listDivisorIter = pListDivisor->begin() ;
-        for(; listDivisorIter != listDivisor.end(); listDivisorIter++)
-                printf("divisor : %d\n", *listDivisorIter) ;
+	list<int>::iterator     listDivisorIter = pListDivisor->begin() ;
+	for(; listDivisorIter != listDivisor.end(); listDivisorIter++)
+		printf("divisor : %d\n", *listDivisorIter) ;
 #endif
 
 	return ;
@@ -268,12 +268,12 @@ getDivisor_while_break :
 
 int CDivisor::getDivisorNum(int value)
 {
-        map<long long, int>           mapIntFactor ;
-        map<long long, int>::iterator mapIntFactorIter ;
+	map<long long, int>	   mapIntFactor ;
+	map<long long, int>::iterator mapIntFactorIter ;
 
 	mapIntFactor.clear() ;
 
-        getIntegerFactorization(value, &mapIntFactor) ;
+	getIntegerFactorization(value, &mapIntFactor) ;
 
 	mapIntFactorIter = mapIntFactor.begin() ;
 
@@ -318,3 +318,37 @@ int CInteger::palindrome(long long value)
 
 	return 0 ;
 }
+
+
+///////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////
+
+CCombination::CCombination(vector<int>* vecInt, int r)
+{
+	m_vecInt = vecInt ;
+
+	m_bitmask.clear() ;
+	m_bitmask.resize(r, 1) ;
+	m_bitmask.resize(vecInt->size(), 0) ;
+}
+
+
+int CCombination::getNext(vector<int>* vecCombi)
+{
+	vecCombi->clear() ;
+
+	int size = m_bitmask.size() ;
+
+	for(int ii = 0; ii < size; ii++)
+	{
+		if(m_bitmask[ii])
+			vecCombi->push_back((*m_vecInt)[ii]) ;
+	}
+
+	if(!prev_permutation(m_bitmask.begin(), m_bitmask.end()))
+		return 0 ;
+
+	return 1 ;
+}
+
+

@@ -2,6 +2,7 @@
 
 #include <sys/time.h>
 #include <map>
+#include <vector>
 
 #include "mymath.h"
 
@@ -71,11 +72,39 @@ int main()
 
 	CInteger integer ;
 
+#if 0
 	int rev = integer.reverse(12345001) ;
 	printf("rev : %d\n", rev) ;
+#endif
 
 
+// test - combination
+#if 1
+        vector<int> vecInt ;
+        vector<int> vecCombi ;
 
+        int n = 6 ;
+        int r = 4 ;
+
+        for(int ii = 1; ii <= n; ii++)
+                vecInt.push_back(ii) ;
+
+        CCombination combination(&vecInt, r) ;
+
+        int flagBreak ;
+
+        while(1)
+        {
+                flagBreak = combination.getNext(&vecCombi) ;
+
+                for(int ii = 0; ii < r; ii++)
+                        printf("%d ", vecCombi[ii]) ;
+                printf("\n") ;
+
+                if(!flagBreak)
+                        break ;
+        }
+#endif
 
 	/////////////////////////////////////////////////////////////////////
 	gettimeofday(&tSecond, NULL) ;

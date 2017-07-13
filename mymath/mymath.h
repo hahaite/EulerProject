@@ -7,6 +7,8 @@
 #include <cstdlib>
 #include <map>
 #include <list>
+#include <vector>
+#include <string>
 
 class CPrime
 {
@@ -68,6 +70,22 @@ private :
 	int m_temp ;
 
 };
+
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+
+class CCombination
+{
+public :
+	CCombination(std::vector<int>* vecInt, int r) ;
+
+	int getNext(std::vector<int>* vecCombi) ;
+
+private :
+	std::string m_bitmask ;
+	std::vector<int>* m_vecInt ;
+};
+
 
 
 #endif
