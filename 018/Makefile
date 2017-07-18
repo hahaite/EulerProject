@@ -1,4 +1,5 @@
 SRC = main.cpp
+SRC += ./../triangleDFS/triangleDFS.cpp
 
 CFLAGS += -W -Wall
 CFLAGS += -Wno-unused-variable

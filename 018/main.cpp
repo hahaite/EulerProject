@@ -2,6 +2,7 @@
 #include <sys/time.h>
 
 #include <set>
+#include "./../triangleDFS/triangleDFS.h"
 
 using namespace std ;
 
@@ -30,39 +31,31 @@ int main()
 	{63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31, 0},
 	{4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23}} ;
 
-#define INDEX_MAX 15
+	CTriangleDFS tridfs ;
 
-	int sum[INDEX_MAX] = {0, } ;
-	int temp [INDEX_MAX] = {0, } ;
+	const int DEPTH = 15 ;
 
-	for(int row = 0; row < INDEX_MAX; row++)
+	tridfs.init(DEPTH) ;
+	int listCol[DEPTH] ;
+
+	int maxSum = 0 ;
+
+	int sum ;
+
+	while(1)
 	{
-		for(int jj = 0; jj < INDEX_MAX; jj++)
-			temp[jj] = sum[jj] ;
+		if(!tridfs.getNext(listCol))
+			break ;
 
+		sum = 0 ;
+		for(int dd = 0; dd < DEPTH; dd++)
+			sum += data[dd][listCol[dd]] ;
 
-		for(int col = 0; col < INDEX_MAX; col++)
-		{
-			if(col == 0)
-			{
-				sum[0] = temp[0] + data[row][col] ;
-				continue ;
-			}
-
-			sum[col] = (temp[col-1] >= temp[col]) ? temp[col-1] : temp[col] ;
-			sum[col] += data[row][col] ;
-		}
+		if(sum > maxSum)
+			maxSum = sum ;
 	}
 
-	set<int>		setInt ;
-	set<int>::iterator      setIntIter ;
-
-	for(int ii = 0; ii < INDEX_MAX; ii++)
-		setInt.insert(sum[ii]) ;
-
-	setIntIter = setInt.end() ;
-	setIntIter-- ;
-	printf("MAx : %d\n", *setIntIter) ;
+	printf("Result : %d\n", maxSum) ;
 
 
 	/////////////////////////////////////////////////////////////////////
