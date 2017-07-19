@@ -64,6 +64,8 @@ class CInteger
 public :
 	long long reverse(long long value) ;
 	int palindrome(long long value) ;
+
+	int GCD(int a, int b) ;
 private :
 
 public :

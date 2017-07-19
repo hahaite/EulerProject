@@ -341,6 +341,19 @@ int CInteger::palindrome(long long value)
 }
 
 
+int CInteger::GCD(int a, int b)
+{
+	while(b != 0)
+	{
+		m_temp = a % b ;
+		a = b ;
+		b = m_temp ;
+	}
+	
+	return 1 ;
+}
+
+
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
 
