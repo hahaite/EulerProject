@@ -46,6 +46,8 @@ public :
 
 	void getDivisor(int value, std::list<int>* pListDivisor) ;
 	int getDivisorNum(int value) ;
+
+	int eulerPhi(long long val) ;
 private :
 
 public :

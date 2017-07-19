@@ -286,6 +286,27 @@ int CDivisor::getDivisorNum(int value)
 	return ret ;
 }
 
+int CDivisor::eulerPhi(long long val)
+{
+	map<long long, int> 		mapInt ;
+	map<long long, int>::iterator 	mapIntIter ;
+
+	int eulerPhi = 1 ;
+
+	getIntegerFactorization(val, &mapInt) ;
+
+	mapIntIter = mapInt.begin() ;
+
+	for(; mapIntIter != mapInt.end(); mapIntIter++)
+	{
+		for(int jj = 1; jj <= mapIntIter->second; jj++)
+			eulerPhi = (jj == 1) ? eulerPhi * (mapIntIter->first - 1) : eulerPhi * mapIntIter->first ;
+	}
+
+	return eulerPhi ;
+}
+
+
 
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
