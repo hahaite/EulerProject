@@ -48,6 +48,9 @@ public :
 	int getDivisorNum(int value) ;
 
 	int eulerPhi(long long val) ;
+
+	int is_pairwise_disjoint_set(int a, int b) ;
+
 private :
 
 public :

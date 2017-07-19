@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cmath>
 #include <algorithm>
+#include <set>
 
 using namespace std ;
 
@@ -306,6 +307,37 @@ int CDivisor::eulerPhi(long long val)
 	return eulerPhi ;
 }
 
+int CDivisor::is_pairwise_disjoint_set(int a, int b)
+{
+	list<int>	       listA ;
+	list<int>	       listB ;
+
+	list<int>::iterator     listIter ;
+
+	set<int>	setAB ;
+
+	getDivisor(a, &listA) ;
+	getDivisor(b, &listB) ;
+
+	// remove 1
+	listA.pop_front() ;
+	listB.pop_front() ;
+
+	listIter = listA.begin() ;
+	for(; listIter != listA.end(); listIter++)
+		setAB.insert(*listIter) ;
+
+	listIter = listB.begin() ;
+	for(; listIter != listB.end(); listIter++)
+		setAB.insert(*listIter) ;
+
+	if(setAB.size() == (listA.size() + listB.size()))
+		return 1 ;
+	else
+		return 0 ;
+
+	return 0 ;
+}
 
 
 ///////////////////////////////////////////////////////////
