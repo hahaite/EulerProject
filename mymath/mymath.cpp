@@ -350,7 +350,7 @@ int CInteger::GCD(int a, int b)
 		b = m_temp ;
 	}
 	
-	return 1 ;
+	return a ;
 }
 
 
