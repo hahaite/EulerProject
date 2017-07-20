@@ -85,9 +85,9 @@ int main()
 				memset(prime, 0x00, sizeof(prime)) ;
 				
 				left = 0 ;
-				for(int ii = 0; ii < r; ii++)
+				for(int ii = 0; ii <= r; ii++)
 				{
-					right = vecCombi[ii] ;
+					right = (ii == r) ? 9 : vecCombi[ii] ;
 					
 					for(int jj = left; jj < right; jj++)
 					{
@@ -98,12 +98,6 @@ int main()
 					left = right ;
 				}
 
-				for(int jj = left; jj < 9; jj++)
-				{
-					prime[r] *= 10 ;
-					prime[r] += data[jj] ;
-				}
-				
 				flagPrimeSet = 1 ;
 				for(int ii = 0; ii <=r; ii++)
 				{
