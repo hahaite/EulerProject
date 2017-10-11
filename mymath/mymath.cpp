@@ -23,13 +23,14 @@ size_t CPrime::power(size_t a, size_t n, size_t mod)
 {
 	size_t power = a;
 	size_t result = 1;
-		 
+
 	while (n)
 	{
 		if (n & 1)
-		result = (result * power) % mod;
+			result = (result * power) % mod;
 		power = (power * power) % mod;
 		n >>= 1;
+
 	}
 	return result;
 }
@@ -39,8 +40,8 @@ bool CPrime::witness(size_t n, size_t s, size_t d, size_t a)
 {
 	size_t x = power(a, d, n);
 	size_t y;
-			 
-	while (s) 
+
+	while(s) 
 	{
 		y = (x * x) % n;
 		if (y == 1 && x != 1 && x != n-1)
