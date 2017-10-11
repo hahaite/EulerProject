@@ -4,9 +4,11 @@
 #include <cmath>
 #include <algorithm>
 #include <set>
+#include <string>
+
+#include "./../bigInt/bigInt.h"
 
 using namespace std ;
-
 
 CPrime::CPrime()
 {
@@ -18,28 +20,114 @@ CPrime::~CPrime()
 
 }
 
-// calcul a^n%mod
-size_t CPrime::power(size_t a, size_t n, size_t mod)
+int CPrime::getDigitNumber(long long n)
 {
-	size_t power = a;
-	size_t result = 1;
+	int count = 0 ;
+	long long temp = n ;
+
+	while(temp)
+	{
+		count++ ;
+		temp /= 10 ;
+	}
+
+	return count ;
+}
+
+
+// calcul a^n%mod
+long long CPrime::power(long long a, long long n, long long mod)
+{
+	long long power = a;
+	long long result = 1;
+	long long temp ;
+
+	int dna, dnb ;
 
 	while (n)
 	{
 		if (n & 1)
-			result = (result * power) % mod;
-		power = (power * power) % mod;
+		{
+			dna = getDigitNumber(result) ;
+			dnb = getDigitNumber(power) ;
+
+			if(dna + dnb > 19)
+			{
+				CBigInt bigR = result ;
+				CBigInt bigPow = power ;
+				CBigInt bigMod = mod ;
+
+				bigR = (bigR * bigPow) % bigMod ;
+				
+				string* pStr = bigR.getStrPtr() ;
+				string::iterator strIter ;
+
+				strIter = pStr->end() ;
+				temp = 1 ;
+			
+				result = 0 ;	
+				while(1)
+				{
+					strIter-- ;
+					result += ((*strIter - '0') * temp) ;
+
+					if(strIter == pStr->begin())
+						break ;
+
+					temp *= 10 ;
+				}
+			}
+			else
+			{
+				result = (result * power) % mod;
+			}
+		}
+
+		dna = getDigitNumber(power) ;
+		dnb = dna ;
+
+		if(dna + dnb > 19)
+		{
+			CBigInt bigPow = power ;
+			CBigInt bigMod = mod ;
+
+			bigPow = (bigPow * bigPow) % bigMod ;
+
+			string* pStr = bigPow.getStrPtr() ;
+			string::iterator strIter ;
+
+			strIter = pStr->end() ;
+			temp = 1 ;
+
+			power = 0 ;
+			while(1)
+			{
+				strIter-- ;
+				power += ((*strIter - '0') * temp) ;
+
+				if(strIter == pStr->begin())
+					break ;
+
+				temp *= 10 ;
+			}
+		}
+		else
+		{
+			power = (power * power) % mod;
+		}
+
 		n >>= 1;
 
 	}
+
 	return result;
 }
 
 // n−1 = 2^s * d with d odd by factoring powers of 2 from n−1
-bool CPrime::witness(size_t n, size_t s, size_t d, size_t a)
+bool CPrime::witness(long long n, long long s, long long d, long long a)
 {
-	size_t x = power(a, d, n);
-	size_t y;
+	long long x = power(a, d, n);
+	long long y;
 
 	while(s) 
 	{
@@ -57,15 +145,15 @@ bool CPrime::witness(size_t n, size_t s, size_t d, size_t a)
 }
 
 
-bool CPrime::isPrime(size_t n)
+bool CPrime::isPrime(long long n)
 {
 	if (((!(n & 1)) && n != 2 ) || (n < 2) || (n % 3 == 0 && n != 3))
 		return false;
 	if (n <= 3)
 		return true;
 
-	size_t d = n / 2;
-	size_t s = 1;
+	long long d = n / 2;
+	long long s = 1;
 	while (!(d & 1))
 	{
 		d /= 2;

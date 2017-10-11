@@ -1,4 +1,5 @@
 SRC = main.cpp mymath.cpp
+SRC += ./../bigInt/bigInt.cpp
 
 CFLAGS += -W -Wall
 CFLAGS += -Wno-unused-variable

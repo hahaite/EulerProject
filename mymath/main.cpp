@@ -17,6 +17,8 @@ int main()
 	/////////////////////////////////////////////////////////////////////
 
 	CPrime prime ;
+	CDivisor divisor ;
+
 #if 0
 	long long curPrime ;
 
@@ -32,20 +34,24 @@ int main()
 	printf("cur Prime : %lld\n", curPrime) ;
 #endif
 
-	CDivisor divisor ;
 
 // test - get integer factorization.
 #if 0
 	map<long long, int> 		mapIntFactor ;
 	map<long long, int>::iterator 	mapIntFactorIter ;
 
-	divisor.getIntegerFactorization(8, &mapIntFactor) ;
+	divisor.getIntegerFactorization(17, &mapIntFactor) ;
+
+	int divisorNumber = 1 ;
 
 	mapIntFactorIter = mapIntFactor.begin() ;
 	for(; mapIntFactorIter != mapIntFactor.end(); mapIntFactorIter++)
 	{
 		printf("Integer Factorialization : [%d, %d]\n", mapIntFactorIter->first, mapIntFactorIter->second) ;
+		divisorNumber *= (mapIntFactorIter->second + 1) ;
 	}
+	printf("number of divisor : %d\n", divisorNumber) ;
+
 #endif
 
 
@@ -54,7 +60,7 @@ int main()
 	list<int> 		listDivisor ;
 	list<int>::iterator 	listDivisorIter ;
 
-	int value = 9 ;
+	int value = 120 ;
 	divisor.getDivisor(value, &listDivisor) ;
 
 	listDivisorIter = listDivisor.begin() ;
@@ -79,11 +85,11 @@ int main()
 
 
 // test - combination
-#if 1
+#if 0
         vector<int> vecInt ;
         vector<int> vecCombi ;
 
-        int n = 6 ;
+        int n = 7 ;
         int r = 4 ;
 
         for(int ii = 1; ii <= n; ii++)
@@ -93,8 +99,15 @@ int main()
 
         int flagBreak ;
 
+	int test = 0 ;
+
         while(1)
         {
+		test++ ;
+
+		if(test == 12)
+			combination.skipThis(vecCombi[1]) ;
+
                 flagBreak = combination.getNext(&vecCombi) ;
 
                 for(int ii = 0; ii < r; ii++)

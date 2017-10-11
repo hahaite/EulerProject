@@ -16,7 +16,7 @@ public :
 	CPrime() ;
 	~CPrime() ;
 
-	bool isPrime(size_t n) ;
+	bool isPrime(long long n) ;
 
 	void setPrime(long long prime) ;
 
@@ -24,11 +24,12 @@ public :
 	long long getNextPrime() ;
 private :
 	// calcul a^n%mod
-	size_t power(size_t a, size_t n, size_t mod) ;
+	long long power(long long a, long long n, long long mod) ;
 
 	// n−1 = 2^s * d with d odd by factoring powers of 2 from n−1
-	bool witness(size_t n, size_t s, size_t d, size_t a) ;
+	bool witness(long long n, long long s, long long d, long long a) ;
 
+	int getDigitNumber(long long n) ;
 
 public :
 
