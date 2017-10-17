@@ -26,7 +26,16 @@ int main()
 
 	int a, b, ret ;
 
-#if 1
+#if 0
+	string 		szData ;
+	string::iterator strIter ;
+	bigA = "1234567" ;
+
+	szData = bigA.getBinary() ;
+	printf("binary : %s\n", szData.c_str()) ;
+#endif
+
+#if 0
 	bigA = 17 ;
 	bigB = 5 ;
 
@@ -195,15 +204,18 @@ int main()
 
 #endif
 
-#if 0 	// combinations test
+#if 1 	// combinations test
 	bigA = "23" ;
 	bigB = "10" ;
 
-	bigC = bigC.combinations(bigA, bigB) ;
-	printf("combination1 %s C %s = %s\n", bigA.c_str(), bigB.c_str(), bigC.c_str()) ;
+//	bigC = bigC.combinations(bigA, bigB) ;
+//	printf("combination1 %s C %s = %s\n", bigA.c_str(), bigB.c_str(), bigC.c_str()) ;
 
-	bigC = bigC.combinations(23, 10) ;
-	printf("combination2 = %s\n", bigC.c_str()) ;
+//	for(int ii = 2; ii <= 20; ii++)
+	{
+		bigC = bigC.combinations(28, 10) ;
+		printf("combination, %d = %s\n", 1, bigC.c_str()) ;
+	}
 
 #endif
 
@@ -227,10 +239,10 @@ int main()
 #endif
 
 #if 0 	// factorial test
-	bigA = 100 ;
+//	bigA = 0 ;
 
-	bigC = bigC.factorial(100) ;
-	printf("result : %s\n", bigC.c_str()) ;
+	bigC = bigC.factorial(63) ;
+	printf("63! = %s\n", bigC.c_str()) ;
 #endif
 
 #if 0 	// pow test
@@ -306,7 +318,7 @@ int main()
 #if __linux__
 	gettimeofday(&tSecond, NULL) ;
 	timersub(&tSecond, &tFirst, &tWorking) ;
-	printf("Working Time : [%lu.%06lu\n", tWorking.tv_sec, tWorking.tv_usec) ;
+	printf("Working Time : [%lu.%06lu]\n", tWorking.tv_sec, tWorking.tv_usec) ;
 #endif
 	return 1 ;
 }

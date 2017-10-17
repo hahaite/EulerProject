@@ -30,6 +30,17 @@ CBigInt::CBigInt(int a)
 	m_remainder.clear() ;
 }
 
+
+CBigInt::CBigInt(long long lla)
+{
+	char szText[32] ;
+	sprintf(szText, "%lld", lla) ;
+
+	m_value = szText ;
+	m_remainder.clear() ;
+}
+
+
 CBigInt::CBigInt(const char* p)
 {
 	m_value = p ;
@@ -111,6 +122,12 @@ int operator==(const CBigInt& bigA, const CBigInt& bigB)
 {
 	return (bigA.m_value == bigB.m_value) ;
 }
+
+int operator!=(const CBigInt& bigA, const CBigInt& bigB)
+{
+	return (bigA.m_value != bigB.m_value) ;
+}
+
 
 ////////////////////////////////////////////////////////////////////////
 
@@ -569,6 +586,43 @@ const CBigInt operator%(const CBigInt& bigA, const CBigInt& bigB)
 }
 
 
+string CBigInt::getBinary()
+{
+//	string* pStr = this->getStrPtr() ;
+//	string::iterator strIter ;
+//	strIter = pStr->end() ;
+
+	CBigInt bigA = *this ;
+	CBigInt bigR ;
+
+	string ret ;
+	ret.clear() ;
+
+	while(1)
+	{
+		bigR = bigA % 2 ;
+
+		if(bigR == 1)
+			ret = '1' + ret ;
+		else
+			ret = '0' + ret ;
+
+		bigA /= 2 ;
+
+		if(bigA == 1)
+		{
+			ret = '1' + ret ;
+			break ;
+		}
+		else if(bigA == 0)
+		{
+			break ;
+		}
+	}
+
+	return ret ;
+}
+
 const CBigInt CBigInt::gcd(const CBigInt& bigA, const CBigInt& bigB)
 {
 	CBigInt bigD = 1 ;
@@ -780,6 +834,16 @@ const CBigInt CBigInt::pow(const CBigInt& bigA, const CBigInt& bigB)
 	return bigInt ;
 }
 
+int CBigInt::eachDigitSum()
+{
+	int sum = 0 ;
+
+	string::iterator        strIter = m_value.begin() ;
+	for(; strIter != m_value.end(); strIter++)
+		sum += *strIter - '0' ;
+
+	return sum ;
+}
 
 string CBigInt::positiveAdd(const string *pStrA, const string* pStrB)
 {
@@ -840,3 +904,201 @@ int CBigInt::positiveCompare(const string* pStrA, const string* pStrB)
 
 	return pStrA->compare(*pStrB) ;
 }
+
+
+
+
+////////////////////////////////////////////////////////
+// CPrimeBigInt
+////////////////////////////////////////////////////////
+
+CPrimeBigInt::CPrimeBigInt()
+{
+	m_curPrime = 0 ;
+}
+
+CPrimeBigInt::~CPrimeBigInt()
+{
+
+}
+
+// calcul a^n%mod
+CBigInt CPrimeBigInt::power(CBigInt a, CBigInt n, CBigInt mod)
+{
+	CBigInt power = a;
+	CBigInt result = 1;
+
+	string* pStr ;
+	string::iterator strIter ;
+	int temp ;
+	string strBinary ;
+
+	while(n.size())
+	{
+		pStr = n.getStrPtr() ;
+		strIter = pStr->end() ;
+		strIter-- ;
+
+		temp = *strIter - '0' ;
+
+		if (temp & 1)
+		{
+			result = (result * power) % mod;
+		}
+		power = (power * power) % mod;
+
+
+		// n >>= 1;
+		strBinary = n.getBinary() ;
+		strIter = strBinary.end() ;
+		strIter-- ;
+		strBinary.erase(strIter) ;
+//		strBinary.pop_front() ;
+
+		if(strBinary.size() == 0)
+			break ;
+
+		strIter = strBinary.end() ;
+		strIter-- ;
+
+		temp = 0 ;
+		n = 0 ;
+		while(1)
+		{
+			if(*strIter - '0' == 1)
+				n += n.pow(2, temp) ;
+			temp++ ;
+
+			if(strIter == strBinary.begin())
+				break ;
+
+			strIter-- ;
+		}
+
+#if 0
+		if (n & 1)
+		{
+			result = (result * power) % mod;
+		}
+		power = (power * power) % mod;
+
+		n >>= 1;
+#endif
+	}
+
+	return result;
+}
+
+bool CPrimeBigInt::isPrime(CBigInt n)
+{
+
+
+	if (((!(n % 2 == 1)) && n != 2 ) || (n < 2) || (n % 3 == 0 && n != 3))
+		return false;
+	if (n <= 3)
+		return true;
+
+	CBigInt d = n / 2;
+	CBigInt s = 1;
+	while (!(d % 2 == 1))
+	{
+		d /= 2;
+		s++;
+	}
+
+	CBigInt c1 = "4759123141" ;
+	CBigInt c2 = "1122004669633" ;
+	CBigInt c3 = "2152302898747" ;
+	CBigInt c4 = "3474749660383" ;
+
+	if (n < 1373653)
+		return witness(n, s, d, 2) && witness(n, s, d, 3);
+	if (n < 9080191)
+		return witness(n, s, d, 31) && witness(n, s, d, 73);
+	if (n < c1)
+		return witness(n, s, d, 2) && witness(n, s, d, 7) && witness(n, s, d, 61);
+	if (n < c2)
+		return witness(n, s, d, 2) && witness(n, s, d, 13) && witness(n, s, d, 23) && witness(n, s, d, 1662803);
+	if (n < c3)
+		return witness(n, s, d, 2) && witness(n, s, d, 3) && witness(n, s, d, 5) && witness(n, s, d, 7) && witness(n, s, d, 11);
+	if (n < c4)
+		return witness(n, s, d, 2) && witness(n, s, d, 3) && witness(n, s, d, 5) && witness(n, s, d, 7) && witness(n, s, d, 11) && witness(n, s, d, 13);
+
+	return witness(n, s, d, 2) && witness(n, s, d, 3) && witness(n, s, d, 5) && witness(n, s, d, 7) && witness(n, s, d, 11) && witness(n, s, d, 13) && witness(n, s, d, 17);
+
+}
+
+void CPrimeBigInt::setPrime(CBigInt prime)
+{
+
+	if((prime % 2) == 0)
+		prime-- ;
+
+	m_curPrime = prime ;
+
+
+	return ;
+}
+
+void CPrimeBigInt::resetPrime()
+{
+	m_curPrime = 0 ;
+	return ;
+}
+
+CBigInt CPrimeBigInt::getNextPrime()
+{
+	if(m_curPrime == 0)
+	{
+		m_curPrime = 2 ;
+		return m_curPrime ;
+	}
+
+	if(m_curPrime == 2)
+	{
+		m_curPrime = 3 ;
+		return m_curPrime ;
+	}
+
+	int ret ;
+	while(1)
+	{
+		m_curPrime += 2 ;
+
+		ret = isPrime(m_curPrime) ;
+
+		if(ret)
+			break ;
+	}
+
+	return m_curPrime ;
+
+}
+
+// n−1 = 2^s * d with d odd by factoring powers of 2 from n−1
+bool CPrimeBigInt::witness(CBigInt n, CBigInt s, CBigInt d, int a)
+{
+
+	CBigInt bigA = a ;
+	CBigInt x = power(bigA, d, n);
+	CBigInt y;
+
+	while(1)
+	{
+		y = (x * x) % n;
+		if (y == 1 && x != 1 && x != n-1)
+			return false;
+		x = y;
+		s-- ;
+
+		if(s == 0)
+			break ;
+	}
+
+	if (y != 1)
+		return false;
+
+	return true;
+
+}
+
