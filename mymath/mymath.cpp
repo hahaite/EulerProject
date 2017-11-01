@@ -36,6 +36,26 @@ int CPrime::getDigitNumber(long long n)
 
 
 // calcul a^n%mod
+#if 1
+//size_t CPrime::power(size_t a, size_t n, size_t mod)
+long long CPrime::power(long long a, long long n, long long mod)
+{
+	long long power = a;
+	long long result = 1;
+	long long temp ;
+
+	while (n)
+	{
+		if (n & 1)
+			result = (result * power) % mod;
+
+		power = (power * power) % mod;
+		n >>= 1;
+	}
+
+	return result;
+}
+#else
 long long CPrime::power(long long a, long long n, long long mod)
 {
 	long long power = a;
@@ -122,6 +142,7 @@ long long CPrime::power(long long a, long long n, long long mod)
 
 	return result;
 }
+#endif
 
 // n−1 = 2^s * d with d odd by factoring powers of 2 from n−1
 bool CPrime::witness(long long n, long long s, long long d, long long a)
